@@ -2,7 +2,7 @@
 name=Ola's Polygon Tools
 qgisMinimumVersion=3.44
 description=Extend, move, and delete polygon vertices with intuitive hotkey modes (W/A/D).
-version=0.3.1
+version=0.3.2
 author=Ola
 email=busy.vase9188@fastmail.com
 about=A polygon vertex editing toolset inspired by JOSM. Three modes activated via toolbar dropdown or keyboard shortcuts: W = extend (hover an edge and click outward to insert a vertex, or click a vertex to chain new nodes), A = move (click a vertex then click its new position, with live blue preview), D = delete (hover a vertex and click to remove it). Includes per-mode toolbar icons and visual feedback.

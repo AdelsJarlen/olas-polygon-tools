@@ -23,7 +23,7 @@ jobs:
       - name: Build plugin ZIP
         run: |
           mkdir -p build/polygon_extender
-          cp __init__.py plugin.py extend_tool.py metadata.txt generate_icons.py build/polygon_extender/
+          cp __init__.py plugin.py extend_tool.py metadata.txt generate_icons.py LICENSE build/polygon_extender/
           # Include icons if present
           for f in icon.png icon_extend.png icon_move.png icon_delete.png; do
             [ -f "$f" ] && cp "$f" build/polygon_extender/

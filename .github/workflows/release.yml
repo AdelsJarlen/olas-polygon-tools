@@ -1,0 +1,44 @@
+name: Release Plugin
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Read version from metadata
+        id: meta
+        run: |
+          version=$(grep -oP '^version=\K.*' metadata.txt)
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: Build plugin ZIP
+        run: |
+          mkdir -p build/polygon_extender
+          cp __init__.py plugin.py extend_tool.py metadata.txt generate_icons.py build/polygon_extender/
+          # Include icons if present
+          for f in icon.png icon_extend.png icon_move.png icon_delete.png; do
+            [ -f "$f" ] && cp "$f" build/polygon_extender/
+          done
+          cd build
+          zip -r ../polygon_extender.zip polygon_extender/
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.meta.outputs.version }}
+          name: v${{ steps.meta.outputs.version }}
+          body: |
+            Ola's Polygon Tools v${{ steps.meta.outputs.version }}
+
+            Install in QGIS: **Plugins → Manage and Install Plugins → Install from ZIP** and select `polygon_extender.zip`.
+          files: polygon_extender.zip
+          make_latest: true
